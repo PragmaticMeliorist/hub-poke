@@ -2,7 +2,7 @@
 
 **Make your 2016 dumpster dive actually usable.**
 
-You pulled a Surface Hub 84" out of a conference-room grave. You want a **dedicated PC** whose only job is that wall — Replacement PC dual DisplayPort, not Guest, not a laptop, not a 2026 GPU “because 4K is 4K.”
+You pulled a Surface Hub 84" out of a conference-room grave. You want a **dedicated PC** whose only job is that Hub — Replacement PC dual DisplayPort, not Guest, not a laptop, not a 2026 GPU “because 4K is 4K.”
 
 The payoff, when hardware **and** drivers are from the **same era**: a **120 Hz 4K 84-inch TOUCH** display.
 
@@ -16,7 +16,7 @@ Hub Poke is the tiny panel for **that** box. It is not a general AMD control pan
 
 A **poke** is a gentle nudge: re-apply the known-good Hub desktop (**3840×2160 @ 120**) through Windows CCD. It does **not** restart the GPU.
 
-Use it when the wall is already the right kit, but the **link got stupid** after:
+Use it when the Hub is already the right kit, but the **link got stupid** after:
 
 - sleep / resume
 - cycling Hub inputs
@@ -41,7 +41,7 @@ The other buttons are not pokes:
 - Create 4K120 on a modern GPU or current Adrenalin
 - Replace CCC Eyefinity / live SLS if the card never trained two tiles
 - Fix a dead Hub DP jack or a missing second cable (one DP = **4K @ 30**, always)
-- Make a **second monitor** a supported setup. We never got a stable dual-head build. We suspect overall system bandwidth and stability (possibly PCIe lanes). Windows really struggles when CPU onboard graphics drives an external monitor **and** a dedicated card is driving this wall. Treat the Hub as the only display.
+- Make a **second monitor** a supported setup. We never got a stable dual-head build. We suspect overall system bandwidth and stability (possibly PCIe lanes). Windows really struggles when CPU onboard graphics drives an external monitor **and** a dedicated card is driving this Hub. Treat the Hub as the only display.
 
 ## Era kit (known-good here)
 
