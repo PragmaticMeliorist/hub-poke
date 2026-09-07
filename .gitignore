@@ -1,0 +1,29 @@
+# HubFix on disk is a local recovery lab. Git tracks Hub Poke only.
+# Do not git add -f driver trees, logs, registry dumps, or one-off tools.
+
+*
+!*/
+!.gitignore
+!README.md
+!build-button.cmd
+!HubButton.exe
+!src/HubButton.cs
+!src/HubRenegotiate.cs
+!src/HubButton.manifest
+!assets/hub-poke.ico
+!assets/hub-poke.png
+!assets/failsafe-w7100-good-dp1-dp3-mst.png
+!assets/failsafe-w7100-bad-dp3-mst-dp4-empty.png
+!assets/failsafe-w7100-bad-dp1-empty-dp3-mst.png
+
+*.log
+*.reg
+*.bin
+q21-wt6a/
+q21-apps/
+backup-*/
+backup-umd-*/
+docs/*
+!docs/public/
+!docs/public/**
+scripts/
