@@ -2,57 +2,80 @@
 
 **Make your 2016 dumpster dive actually usable.**
 
-You pulled a Surface Hub 84" out of a conference-room grave. You want a **dedicated machine** to drive it — not a laptop docked as a guest, not a 2026 gaming card “because 4K is 4K.” This is the poke panel for that wall.
+You pulled a Surface Hub 84" out of a conference-room grave. You want a **dedicated PC** whose only job is that wall — Replacement PC dual DisplayPort, not Guest, not a laptop, not a 2026 GPU “because 4K is 4K.”
 
-The payoff, when hardware and software are from the **same era**: a **120 Hz 4K 84-inch TOUCH** display.
+The payoff, when hardware **and** drivers are from the **same era**: a **120 Hz 4K 84-inch TOUCH** display.
 
-## This is an era kit
+## Who this is for
 
-Microsoft’s own 4K120 path for the 84" was **two DisplayPort 1.2 links + AMD Eyefinity / SLS** on a workstation card of that generation. New GPUs, new Adrenalin, and Windows Settings → Extend will not invent that stitch.
+People running a Hub 84" as a **single-purpose** Windows machine on an old AMD workstation card (here: **FirePro W7100**, dual DP 1.2, Eyefinity/SLS). Microsoft’s 4K120 path was that stitch. New Adrenalin and Settings → Extend will not invent it.
 
-**What this machine actually runs**
+Hub Poke is the tiny panel for **that** box. It is not a general AMD control panel, not an installer, and not a way to add a second desktop monitor.
 
-| Piece | Known-good here |
+## What a poke is
+
+A **poke** is a gentle nudge: re-apply the known-good Hub desktop (**3840×2160 @ 120**) through Windows CCD. It does **not** restart the GPU.
+
+Use it when the wall is already the right kit, but the **link got stupid** after:
+
+- sleep / resume
+- cycling Hub inputs
+- unplugging or reseating a DP cable
+
+That is the green **Hub** button. Most days that is all you want.
+
+The other buttons are not pokes:
+
+| When | What |
 | --- | --- |
-| Panel | Surface Hub **84"** (`PPX0084`), **Replacement PC** dual DP (not Guest) |
-| GPU | **AMD FirePro W7100** (`VEN_1002` / `DEV_692B`), four DP 1.2 |
-| Stitch | Card-side **SLS / Eyefinity**, one Windows desktop |
-| FirePro driver | **27.20.21026.2006** (Radeon Pro Software Enterprise **21.Q2.1**) |
-| OS | Windows 11 can host it — the **GPU stack** still has to be 21.Q2-era |
-| Cables | **Two** DP 1.2, both Replacement-PC jacks seated **before** the Hub powers on |
-| Touch | Hub HID `VID_2465` / `PID_6512` (not a DisplayPort trick) |
+| Taps land on the wrong screen after a mode change | **Map Touch → Hub** (USB/HID, not DisplayPort) |
+| Gentle poke is not enough and you accept a live GPU restart | **Hot Retraining** (FirePro disable/enable; can TDR) |
+| One GPU DP is MST Hub, the other is empty `Connected ()`, desktop stuck at 4K30 | **Tried all three…** → **Cold Retraining**: Hub **off**, both cables already in, Hub **on** |
 
-One DP = **4K @ 30**. Both DPs + live SLS = **3840×2160 @ 120** desktop (the MST tile *signal* may still read 960×2160@120 — that is not the desktop).
+## What it enables — and what it does not
 
-Want a second monitor? Fine as a side panel on another GPU. Do not let Windows treat the Hub as “extend these mixed adapters.”
+**Enables:** keeping a known-good **era** Replacement-PC build on its feet: 4K120 desktop, card-side SLS (one Windows desktop), Hub touch on the 84".
+
+**Does not:**
+
+- Create 4K120 on a modern GPU or current Adrenalin
+- Replace CCC Eyefinity / live SLS if the card never trained two tiles
+- Fix a dead Hub DP jack or a missing second cable (one DP = **4K @ 30**, always)
+- Make a **second monitor** a supported setup. We never got a stable dual-head build. We suspect overall system bandwidth and stability (possibly PCIe lanes). Windows really struggles when CPU onboard graphics drives an external monitor **and** a dedicated card is driving this wall. Treat the Hub as the only display.
+
+## Era kit (known-good here)
+
+| Piece | This machine |
+| --- | --- |
+| Panel | Hub **84"** (`PPX0084`), **Replacement PC** dual DP |
+| GPU | **FirePro W7100** (`VEN_1002` / `DEV_692B`) |
+| Stitch | Card-side **SLS / Eyefinity** |
+| Driver | **27.20.21026.2006** (Radeon Pro **21.Q2.1**) |
+| OS | Windows 11 can host it; the **GPU stack** must stay 21.Q2-era |
+| Cables | **Two** DP 1.2, seated **before** the Hub powers on |
+| Touch | Hub HID `VID_2465` / `PID_6512` |
+
+The MST *signal* may still read 960×2160@120. That is a tile, not the desktop. Never set the Windows desktop to 960.
 
 ## Things we learned to avoid
 
-In our experience this **only works with old-school AMD cards on older drivers**. Match the hardware **and** the software to that era. Then do not do these:
+Match **era card + era driver**, then don’t:
 
-- **Don’t buy a modern GPU for this job.** You want a dedicated box with a DP 1.2 workstation card that still does MST tiles + Eyefinity.
-- **Don’t put current Adrenalin on the W7100.** Keep **21.Q2.1** / **27.20.21026.2006**.
-- **Don’t Windows Settings → Extend** on mixed iGPU + FirePro. It blacks the wrong screens.
-- **Don’t set the Hub desktop to 960.** That’s the tile. Desktop is **4K120**.
-- **Don’t PnP-disable the second Hub tile** (UID265) to “clean up” Settings. That locks **4K30**.
-- **Don’t hide 640×480 stubs** in this app so it looks like one display. The stub is a symptom.
-- **Don’t DDU / don’t rip the iGPU** as the first “fix.”
-- **Don’t live-restart the FirePro** as the default poke. That’s **Hot Retraining**; it can TDR.
-- **Don’t hot-plug the second DP** after a single-link 4K30 lock and expect 120 Hz.
-- **Don’t treat AMD’s red X + “Unsupported Type (MST)” as a dead port.** Two of those is the *healthy* 4K120 look.
-- **Don’t treat empty `Connected ()` as “buy cables.”** That’s leftover HPD. **Cold Retraining:** Hub fully off, **both** cables already in, Hub on.
-- **Don’t use software DPMS** to wake the 84". Power-cycle the Hub.
-- **Don’t Clone** hoping it invents 4K120.
-- **Don’t assume a Windows Update ate the FirePro driver** until you check the version. Ours stayed 21.Q2.1 while SLS was simply not live.
-
-## Hub Poke
-
-| Control | What it does |
-| --- | --- |
-| **Hub** | Gentle CCD renegotiate after sleep, input cycle, or a live cable hot-swap. No GPU restart. |
-| **Map Touch → Hub** | Put taps on the 84-inch. Separate from poke. |
-| **Hot Retraining** | Live FirePro disable/enable. Last software resort. |
-| **Tried all three, and it still isn't working?** | **Cold Retraining** walkthrough (Hub power cycle with both DPs seated). |
+- Buy a modern GPU for this job
+- Put current Adrenalin on the W7100
+- Settings → **Extend** (mixed iGPU + FirePro blacks the wrong screens)
+- Drive a second monitor off the iGPU “on the side”
+- Set the Hub desktop to 960
+- PnP-disable the second Hub tile (UID265) — that locks **4K30**
+- Hide 640×480 stubs in this app
+- DDU / rip the iGPU as the first fix
+- Live-restart the FirePro as the default poke
+- Hot-plug the second DP after a 4K30 lock and expect 120 Hz
+- Treat AMD’s red X + **Unsupported Type (MST)** as dead — two of those is the *healthy* look
+- Treat empty `Connected ()` as “buy cables” — leftover HPD; Cold Retraining first
+- Use software DPMS to wake the 84"
+- Clone hoping it invents 4K120
+- Blame Windows Update for eating the FirePro driver before you check the version
 
 ## Build (Windows)
 
@@ -62,4 +85,4 @@ build-button.cmd
 
 Needs the .NET Framework 4.x `csc.exe` that ships with Windows. Keep `assets\` next to `HubButton.exe`.
 
-This working tree may also contain a private HubFix recovery lab (drivers, logs, one-off tools). Those are gitignored. Do not force-add them. Hub Poke finds the W7100 (`VEN_1002&DEV_692B`) and Hub touch (`VID_2465&PID_6512`) at runtime — it does not ship machine instance serials.
+This folder may also hold a private recovery lab (drivers, logs, one-off tools). Those are gitignored. Hub Poke finds the W7100 and Hub touch by hardware ID at runtime; it does not ship machine serials.
