@@ -12,6 +12,9 @@
 !src/HubButton.manifest
 !assets/hub-poke.ico
 !assets/hub-poke.png
+!assets/hub-poke-app.png
+!assets/hub-poke-cold-retraining.png
+!assets/surface-hub-used-no-boot.jpg
 !assets/failsafe-w7100-good-dp1-dp3-mst.png
 !assets/failsafe-w7100-bad-dp3-mst-dp4-empty.png
 !assets/failsafe-w7100-bad-dp1-empty-dp3-mst.png

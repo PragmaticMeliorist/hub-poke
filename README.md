@@ -4,17 +4,25 @@
 
 You pulled a Surface Hub 84" out of a conference-room grave. You want a **dedicated PC** whose only job is that Hub — Replacement PC dual DisplayPort, not Guest, not a laptop, not a 2026 GPU “because 4K is 4K.”
 
+![Used Surface Hub 84" on a rolling stand, blue dialog: No bootable device](assets/surface-hub-used-no-boot.jpg)
+
+*This is the unit. “No bootable device” is the original compute. You are not resurrecting Windows 10 Team. You hang a Replacement PC on the dual DP and make 4K120 actually stick.*
+
 The payoff, when hardware **and** drivers are from the **same era**: a **120 Hz 4K 84-inch TOUCH** display.
 
 ## Who this is for
 
 People running a Hub 84" as a **single-purpose** Windows machine on an old AMD workstation card (here: **FirePro W7100**, dual DP 1.2, Eyefinity/SLS). Microsoft’s 4K120 path was that stitch. New Adrenalin and Settings → Extend will not invent it.
 
+Install Microsoft’s **[Surface Hub Replacement PC driver package](https://www.microsoft.com/download/details.aspx?id=52210)** on the PC. For the 84" at 120 Hz, use a listed-era card (this build: W7100) and the matching **Windows 10-era** AMD Pro/FirePro driver — **21.Q2.1** / **27.20.21026.2006** here, not current Adrenalin. That whole stack is Windows 10-era hardware and drivers. It runs on **Windows 11** just fine (Microsoft documents Replacement PC on Win10 *or* Win11). See [Connect and display with Surface Hub](https://learn.microsoft.com/en-us/surface-hub/connect-and-display-with-surface-hub).
+
 Hub Poke is the tiny panel for **that** box. It is not a general AMD control panel, not an installer, and not a way to add a second desktop monitor.
 
 ## What a poke is
 
 A **poke** is a gentle nudge: re-apply the known-good Hub desktop (**3840×2160 @ 120**) through Windows CCD. It does **not** restart the GPU.
+
+![Hub Poke: Hub, Map Touch, Hot Retraining, Cold Retraining failsafe, 4K120 OK](assets/hub-poke-app.png)
 
 Use it when the Hub is already the right kit, but the **link got stupid** after:
 
@@ -31,6 +39,8 @@ The other buttons are not pokes:
 | Taps land on the wrong screen after a mode change | **Map Touch → Hub** (USB/HID, not DisplayPort) |
 | Gentle poke is not enough and you accept a live GPU restart | **Hot Retraining** (FirePro disable/enable; can TDR) |
 | One GPU DP is MST Hub, the other is empty `Connected ()`, desktop stuck at 4K30 | **Tried all three…** → **Cold Retraining**: Hub **off**, both cables already in, Hub **on** |
+
+![Cold Retraining walkthrough: 4K30 + empty Connected () vs both ports MST after Hub power cycle](assets/hub-poke-cold-retraining.png)
 
 ## What it enables — and what it does not
 
@@ -50,8 +60,8 @@ The other buttons are not pokes:
 | Panel | Hub **84"** (`PPX0084`), **Replacement PC** dual DP |
 | GPU | **FirePro W7100** (`VEN_1002` / `DEV_692B`) |
 | Stitch | Card-side **SLS / Eyefinity** |
-| Driver | **27.20.21026.2006** (Radeon Pro **21.Q2.1**) |
-| OS | Windows 11 can host it; the **GPU stack** must stay 21.Q2-era |
+| Drivers | Microsoft **Replacement PC** package + AMD **21.Q2.1** / **27.20.21026.2006** (Win10-era; runs on Win11) |
+| OS | Windows 11 |
 | Cables | **Two** DP 1.2, seated **before** the Hub powers on |
 | Touch | Hub HID `VID_2465` / `PID_6512` |
 
@@ -61,6 +71,7 @@ The MST *signal* may still read 960×2160@120. That is a tile, not the desktop. 
 
 Match **era card + era driver**, then don’t:
 
+- Skip the Microsoft Replacement PC drivers
 - Buy a modern GPU for this job
 - Put current Adrenalin on the W7100
 - Settings → **Extend** (mixed iGPU + FirePro blacks the wrong screens)
